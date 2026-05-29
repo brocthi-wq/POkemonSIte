@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Application Pokémon – Authentification</title>
+
+    <!-- Fichier CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase JS SDK (v8 style, plus simple pour un projet statique) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <!-- Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <!-- Votre script JavaScript (après le SDK pour pouvoir l'utiliser) -->
+    <script defer src="script.js"></script>
+</head>
+<body>
+<div class="container">
+    <!-- Formulaire d’authentification -->
+    <section id="login-section" class="form-box">
+        <h2>Connexion</h2>
+
+        <form id="login-form">
+            <label for="email">E‑mail :</label>
+            <input type="email" id="email" required placeholder="exemple@domaine.com">
+
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" required placeholder="******">
+
+            <button type="submit">Se connecter</button>
+        </form>
+
+        <p class="error-msg" id="login-error"></p>
+
+        <!-- Lien vers la création d’un compte (facultatif) -->
+        <p>Pas encore de compte ? <a href="#" id="show-signup">S’inscrire</a></p>
+    </section>
+
+    <!-- Formulaire d’inscription (initialement caché) -->
+    <section id="signup-section" class="form-box hidden">
+        <h2>Inscription</h2>
+
+        <form id="signup-form">
+            <label for="new-email">E‑mail :</label>
+            <input type="email" id="new-email" required placeholder="exemple@domaine.com">
+
+            <label for="new-password">Mot de passe (≥6 caractères) :</label>
+            <input type="password" id="new-password" required minlength="6">
+
+            <button type="submit">S’inscrire</button>
+        </form>
+
+        <p class="error-msg" id="signup-error"></p>
+
+        <!-- Retour à la connexion -->
+        <p>Vous avez déjà un compte ? <a href="#" id="show-login">Se connecter</a></p>
+    </section>
+
+    <!-- Zone affichée une fois l’utilisateur connecté -->
+    <section id="app-section" class="hidden">
+        <h2>Bienvenue, <span id="user-email"></span> !</h2>
+
+        <button id="logout-btn">Déconnexion</button>
+
+        <!-- ---------------------------------------------
+             1️⃣ Formulaire d’ajout de carte
+        ---------------------------------------------- -->
+        <section id="card-input-section" class="form-box">
+            <h3>Ajouter une carte à ma collection</h3>
+            <form id="add-card-form">
+                <label for="card-name">Nom de la carte (facultatif)</label>
+                <input type="text" id="card-name" placeholder="Pikachu, etc.">
+
+                <label for="card-lang">Langue</label>
+                <select id="card-lang">
+                    <option value="fr">Français</option>
+                    <option value="en">Anglais</option>
+                    <option value="jp">Japonais</option>
+                    <option value="cn">Chinois</option>
+                </select>
+
+                <label for="card-number">Numéro de la carte (ex. 45/60)</label>
+                <input type="text" id="card-number" placeholder="45/60" required>
+
+                <label for="purchase-price">Prix d’achat (€)</label>
+                <input type="number" id="purchase-price" step="0.01" min="0" required placeholder="ex: 12,50">
+
+                <button type="submit">Soumettre</button>
+            </form>
+
+            <!-- Messages de confirmation / erreur -->
+            <p class="error-msg" id="add-card-error"></p>
+            <p class="success-msg" id="add-card-success"></p>
+        </section>
+
+        <!-- ---------------------------------------------
+             2️⃣ Affichage de la collection
+        ---------------------------------------------- -->
+        <section id="cards-list-section">
+            <h3>Ma Collection</h3>
+            <div id="cards-list"></div>
+        </section>
+    </section>
+</div>
+</body>
+</html>
