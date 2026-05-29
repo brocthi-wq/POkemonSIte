@@ -20,6 +20,10 @@ const cardCondition = document.getElementById('card-condition');
 const cardLanguage = document.getElementById('card-language');
 const cardPrice = document.getElementById('card-price');
 const cardLink = document.getElementById('card-link');
+const btnAutofill = document.getElementById('btn-autofill');
+
+// URL de la Cloud Function à déployer (remplacez par votre URL après déploiement)
+const PARSER_URL = '';
 
 /* ==============================
    Authentication Check
@@ -115,6 +119,55 @@ cardForm.addEventListener('submit', async (e) => {
         showFormMessage('Erreur lors de l\'ajout de la carte. Veuillez réessayer.', 'error');
     }
 });
+
+// Auto-fill from Cardsmarket link
+if (btnAutofill) {
+    btnAutofill.addEventListener('click', async () => {
+        const url = cardLink.value.trim();
+        if (!url) {
+            showFormMessage('Veuillez coller un lien Cardsmarket avant.', 'error');
+            return;
+        }
+
+        if (!PARSER_URL) {
+            showFormMessage('PARSER_URL non configurée. Déployez la Cloud Function et mettez à jour la variable.', 'error');
+            return;
+        }
+
+        showFormMessage('Recherche des informations...', 'success');
+
+        try {
+            const resp = await fetch(PARSER_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url })
+            });
+
+            if (!resp.ok) {
+                const errBody = await resp.json().catch(() => ({}));
+                throw new Error(errBody.error || 'Erreur lors du parsing');
+            }
+
+            const data = await resp.json();
+
+            if (data.name) cardName.value = data.name;
+            if (data.number) cardNumber.value = data.number;
+            if (data.hp) cardHp.value = data.hp;
+            if (data.language) {
+                // Try to match one of the select values
+                const langMap = { 'Français': 'francais', 'English': 'anglais', 'Chinois': 'chinois', '日本語': 'japonais', '한국어': 'coreen', 'Español': 'espagnol', 'Italiano': 'italien', 'Deutsch': 'allemand' };
+                const mapped = langMap[data.language] || data.language.toLowerCase();
+                cardLanguage.value = mapped;
+            }
+            if (data.price) cardPrice.value = data.price;
+
+            showFormMessage('Informations auto-remplies.', 'success');
+        } catch (err) {
+            console.error(err);
+            showFormMessage('Impossible de récupérer les informations depuis le lien.', 'error');
+        }
+    });
+}
 
 // Voir la collection
 btnCollections.addEventListener('click', () => {
