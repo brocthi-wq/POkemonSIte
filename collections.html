@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Collection Pokémon</title>
+    <link rel="stylesheet" href="collections.css">
+</head>
+<body>
+<div class="container">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <h1>Ma Collection</h1>
+            <button id="logout-btn" class="logout-btn">Déconnexion</button>
+        </div>
+        <a href="dashboard.html" class="back-link">&larr; Retour</a>
+    </header>
+
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stat">
+            <span class="stat-label">Cartes totales</span>
+            <span class="stat-value" id="total-cards">0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Valeur totale</span>
+            <span class="stat-value" id="total-value">0€</span>
+        </div>
+    </div>
+
+    <!-- Cards List -->
+    <div id="cards-list" class="cards-list">
+        <p class="empty-message">Aucune carte trouvée. Allez en ajouter une ! 📝</p>
+    </div>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore-compat.js"></script>
+
+<!-- Scripts -->
+<script src="auth-config.js"></script>
+<script src="collections.js"></script>
+</body>
+</html>

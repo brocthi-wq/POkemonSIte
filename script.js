@@ -90,10 +90,18 @@ async function handleSubmit(e) {
             // Connexion
             await auth.signInWithEmailAndPassword(email, pwd);
             showSuccess('Connexion réussie !');
+            // Rediriger vers le dashboard après 1.5 secondes
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1500);
         } else {
             // Inscription
             await auth.createUserWithEmailAndPassword(email, pwd);
             showSuccess('Inscription réussie ! Vous êtes maintenant connecté.');
+            // Rediriger vers le dashboard après 1.5 secondes
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1500);
         }
     } catch (err) {
         console.error(err);
