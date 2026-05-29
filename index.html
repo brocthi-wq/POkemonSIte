@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Pokémon Collection – Auth</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase (compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+<div id="app">
+
+    <!-- ======== SECTION : Connexion ======== -->
+    <section id="login-section">
+        <h2>Connexion</h2>
+        <form id="login-form">
+            <label for="login-email">E‑mail :</label>
+            <input type="email" id="login-email" required>
+
+            <label for="login-password">Mot de passe :</label>
+            <input type="password" id="login-password" required>
+
+            <button type="submit">Se connecter</button>
+        </form>
+        <div id="login-error" class="error-msg"></div>
+    </section>
+
+
+    <!-- ======== SECTION : Inscription ======== -->
+    <section id="signup-section">
+        <h2>Inscription</h2>
+        <form id="signup-form">
+            <label for="signup-email">E‑mail :</label>
+            <input type="email" id="signup-email" required>
+
+            <label for="signup-password">Mot de passe (min 6 ch.) :</label>
+            <input type="password" id="signup-password" minlength="6" required>
+
+            <button type="submit">S’inscrire</button>
+        </form>
+        <div id="signup-error" class="error-msg"></div>
+    </section>
+
+
+    <!-- ======== SECTION : Utilisateur connecté ======== -->
+    <section id="user-section" style="display:none;">
+        <h2>Bienvenue, <span id="user-email"></span></h2>
+
+        <p>Ceci est la zone d’utilisateur connecté.  
+        (Vous pouvez ajouter ici votre interface de collection Pokémon.)</p>
+
+        <button id="logout-btn">Déconnexion</button>
+    </section>
+
+</div>
+
+
+<!-- Votre code JS (auth + UI) -->
+<script src="main.js"></script>
+</body>
+</html>
