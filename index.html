@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion / Inscription</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase SDK (auth & app) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js"></script>
+</head>
+<body>
+<div class="container">
+    <!-- Card -->
+    <div id="card" class="card">
+        <!-- Logo / titre -->
+        <h2 id="card-title">Connexion</h2>
+
+        <!-- Formulaire -->
+        <form id="auth-form">
+            <label for="email-input">Email :</label>
+            <input type="email" id="email-input" required placeholder="exemple@domaine.com">
+
+            <label for="password-input">Mot de passe :</label>
+            <input type="password" id="password-input" required placeholder="Votre mot de passe">
+
+            <!-- Texte d’aide (pour l’inscription) -->
+            <p id="pwd-help" class="help-text"></p>
+
+            <!-- Bouton submit -->
+            <button type="submit" id="submit-btn">Connexion</button>
+        </form>
+
+        <!-- Lien switcher -->
+        <div id="switch-link">
+            Pas encore de compte ?
+            <a href="#" id="toggle-mode">S'enregistrer</a>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

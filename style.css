@@ -1,0 +1,111 @@
+/* ==============================
+   Firebase configuration
+   ============================== */
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    // ...les autres paramètres de votre projet Firebase
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+/* ==============================
+   DOM Elements
+   ============================== */
+const cardTitle      = document.getElementById('card-title');
+const emailInput     = document.getElementById('email-input');
+const pwdInput       = document.getElementById('password-input');
+const submitBtn      = document.getElementById('submit-btn');
+const switchLink     = document.getElementById('toggle-mode');
+const helpText       = document.getElementById('pwd-help');
+
+/* ==============================
+   Mode state
+   0 → Connexion, 1 → Inscription
+   ============================== */
+let mode = 0; // 0 : connexion, 1 : inscription
+
+/* ==============================
+   Switch between modes
+   ============================== */
+function toggleMode() {
+    if (mode === 0) {      // on passe à l'inscription
+        mode = 1;
+        cardTitle.textContent     = 'Inscription';
+        submitBtn.textContent     = 'S\'inscrire';
+        switchLink.innerHTML      = 'Déjà inscrit ? <a href="#" id="toggle-mode">Se connecter</a>';
+        helpText.textContent      = 'Mot de passe : 6 caractères minimum, au moins 1 majuscule et 1 chiffre.';
+    } else {              // on revient à la connexion
+        mode = 0;
+        cardTitle.textContent     = 'Connexion';
+        submitBtn.textContent     = 'Se connecter';
+        switchLink.innerHTML      = 'Pas encore de compte ? <a href="#" id="toggle-mode">S\'enregistrer</a>';
+        helpText.textContent      = '';
+    }
+}
+
+/* ==============================
+   Validate password for inscription
+   ============================== */
+function isPasswordValid(pwd) {
+    const minLen  = /.{6,}/;
+    const hasUpper= /[A-Z]/;
+    const hasDigit= /\d/;
+    return minLen.test(pwd) && hasUpper.test(pwd) && hasDigit.test(pwd);
+}
+
+/* ==============================
+   Form submit handler
+   ============================== */
+async function handleSubmit(e) {
+    e.preventDefault();
+
+    const email = emailInput.value.trim();
+    const pwd   = pwdInput.value;
+
+    if (mode === 0) { // Connexion
+        try {
+            await auth.signInWithEmailAndPassword(email, pwd);
+            alert('Connexion réussie !');
+            // Vous pouvez rediriger vers une autre page ici
+        } catch (err) {
+            alert(err.message);
+        }
+    } else {          // Inscription
+        if (!isPasswordValid(pwd)) {
+            alert('Le mot de passe ne respecte pas les critères.');
+            return;
+        }
+
+        try {
+            await auth.createUserWithEmailAndPassword(email, pwd);
+            alert('Inscription réussie ! Vous êtes maintenant connecté.');
+            // Après inscription on peut rester sur la même page ou rediriger
+        } catch (err) {
+            alert(err.message);
+        }
+    }
+}
+
+/* ==============================
+   Event listeners
+   ============================== */
+switchLink.addEventListener('click', function(e){
+    e.preventDefault();
+    toggleMode();
+});
+
+document.getElementById('auth-form').addEventListener('submit', handleSubmit);
+
+/* ==============================
+   Firebase auth state listener (facultatif)
+   ============================== */
+auth.onAuthStateChanged(user => {
+    if (user) {
+        console.log('Utilisateur connecté : ', user.email);
+        // Vous pouvez afficher un message ou rediriger
+    } else {
+        console.log('Aucun utilisateur connecté');
+    }
+});
