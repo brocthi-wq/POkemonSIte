@@ -1,4 +1,4 @@
-/* ----------------------------------------------------
+﻿/* ----------------------------------------------------
    ⚙️  INITIALISATION Firebase (compat) 
    ---------------------------------------------------- */
 const firebaseConfig = {
@@ -87,15 +87,33 @@ async function handleSubmit(e) {
 
     try {
         if (mode === 0) {
+            // Connexion
             await auth.signInWithEmailAndPassword(email, pwd);
             showSuccess('Connexion réussie !');
         } else {
+            // Inscription
             await auth.createUserWithEmailAndPassword(email, pwd);
             showSuccess('Inscription réussie ! Vous êtes maintenant connecté.');
         }
     } catch (err) {
         console.error(err);
-        showError(err.message || 'Erreur lors de l’authentification.');
+        
+        // Messages d'erreur personnalisés
+        let errorMsg = 'Erreur lors de l\'authentification.';
+        
+        if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+            errorMsg = 'Le mot de passe ou l\'adresse est incorrect.';
+        } else if (err.code === 'auth/email-already-in-use') {
+            errorMsg = 'Adresse utilisée.';
+        } else if (err.code === 'auth/invalid-email') {
+            errorMsg = 'Veuillez saisir une adresse email valide.';
+        } else if (err.code === 'auth/weak-password') {
+            errorMsg = 'Le mot de passe est trop faible.';
+        } else if (err.code === 'auth/too-many-requests') {
+            errorMsg = 'Trop de tentatives. Réessayez plus tard.';
+        }
+        
+        showError(errorMsg);
     }
 }
 
