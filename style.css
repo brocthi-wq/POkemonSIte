@@ -1,0 +1,99 @@
+/* ------------------------------------------------------------------
+   Mise en page générale
+------------------------------------------------------------------ */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6fa;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    width: 320px;
+    padding: 24px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+}
+
+/* ------------------------------------------------------------------
+   Formulaire
+------------------------------------------------------------------ */
+form label {
+    display: block;
+    margin-top: 12px;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button#action-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 18px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button#action-btn:hover { background: #0069d9; }
+
+.toggle-link {
+    text-align: center;
+    margin-top: 12px;
+}
+
+.toggle-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+.toggle-link a:hover { text-decoration: underline; }
+
+/* ------------------------------------------------------------------
+   Modal
+------------------------------------------------------------------ */
+#modal.hidden,
+#confirm-field.hidden {
+    display: none;
+}
+
+#modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    text-align: center;
+    width: 260px;
+}
+
+#close-modal {
+    margin-top: 12px;
+    padding: 6px 12px;
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+#close-modal:hover { background: #218838; }
