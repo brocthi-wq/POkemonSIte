@@ -19,6 +19,7 @@ const cardHp = document.getElementById('card-hp');
 const cardCondition = document.getElementById('card-condition');
 const cardLanguage = document.getElementById('card-language');
 const cardPrice = document.getElementById('card-price');
+const cardLink = document.getElementById('card-link');
 
 /* ==============================
    Authentication Check
@@ -85,19 +86,19 @@ cardForm.addEventListener('submit', async (e) => {
         condition: cardCondition.value,
         language: cardLanguage.value,
         price: parseFloat(cardPrice.value),
-        userId: auth.currentUser.uid,
+        link: cardLink.value.trim(),
         createdAt: new Date(),
     };
 
     // Validation
     if (!data.name || !data.number || !data.hp || !data.condition || !data.language || !data.price) {
-        showFormMessage('Veuillez remplir tous les champs.', 'error');
+        showFormMessage('Veuillez remplir tous les champs obligatoires.', 'error');
         return;
     }
 
     try {
-        // Ajouter le document à Firestore
-        await db.collection('pokemon-cards').add(data);
+        // Ajouter le document à Firestore : users/{userId}/collection/{cardId}
+        await db.collection('users').doc(auth.currentUser.uid).collection('collection').add(data);
         
         // Afficher le message de succès
         showFormMessage('Carte ajoutée avec succès ! 🎉', 'success');
