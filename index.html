@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Application Pokémon – Authentification</title>
+
+    <!-- Fichier CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase JS SDK (v8 style, plus simple pour un projet statique) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <!-- Votre script JavaScript (après le SDK pour pouvoir l'utiliser) -->
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Formulaire d’authentification -->
+        <section id="login-section" class="form-box">
+            <h2>Connexion</h2>
+
+            <form id="login-form">
+                <label for="email">E‑mail :</label>
+                <input type="email" id="email" required placeholder="exemple@domaine.com">
+
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" required placeholder="******">
+
+                <button type="submit">Se connecter</button>
+            </form>
+
+            <p class="error-msg" id="login-error"></p>
+
+            <!-- Lien vers la création d’un compte (facultatif) -->
+            <p>Pas encore de compte ? <a href="#" id="show-signup">S’inscrire</a></p>
+        </section>
+
+        <!-- Formulaire d’inscription (initialement caché) -->
+        <section id="signup-section" class="form-box hidden">
+            <h2>Inscription</h2>
+
+            <form id="signup-form">
+                <label for="new-email">E‑mail :</label>
+                <input type="email" id="new-email" required placeholder="exemple@domaine.com">
+
+                <label for="new-password">Mot de passe (≥6 caractères) :</label>
+                <input type="password" id="new-password" required minlength="6">
+
+                <button type="submit">S’inscrire</button>
+            </form>
+
+            <p class="error-msg" id="signup-error"></p>
+
+            <!-- Retour à la connexion -->
+            <p>Vous avez déjà un compte ? <a href="#" id="show-login">Se connecter</a></p>
+        </section>
+
+        <!-- Zone affichée une fois l’utilisateur connecté -->
+        <section id="app-section" class="hidden">
+            <h2>Bienvenue, <span id="user-email"></span> !</h2>
+
+            <button id="logout-btn">Déconnexion</button>
+
+            <!-- Ici vous pourrez ajouter votre interface de collection Pokémon -->
+            <div id="collection-placeholder">
+                <!-- Votre contenu dynamique (ex. liste des cartes) ira ici -->
+            </div>
+        </section>
+    </div>
+</body>
+</html>
